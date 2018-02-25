@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataBaseService, Courses } from '../data-base.service';
 
 @Component({
   selector: 'app-course',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseComponent implements OnInit {
 
-  constructor() { }
+  courses: Array<Courses>;
 
-  ngOnInit() {
+  constructor(private dataBaseService: DataBaseService) {
   }
 
+  ngOnInit() {
+    this.dataBaseService.getCourses().subscribe(cour => {
+      this.courses = cour;
+    });
+  }
+
+  getCourseById(id: string) {
+    return this.dataBaseService.getCourseByIdObs(id);
+  }
 }
